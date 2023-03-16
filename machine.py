@@ -11,6 +11,10 @@ import random
 import sys
 import os
 
+""" VARIABLES """
+
+error1 = "Firstly you must to get a question"
+
 """ EXTERNAL FUNCTIONS """
 
 def deletePNG(text):
@@ -41,6 +45,7 @@ def TurnOffMachine():
 	sys.exit()
 
 def GetQuestion(mode_controller,label,score):
+	# refresh score
 	old_score = deleteScoreText(score.text())
 	new_score = int(old_score) + 1
 	score.setText('Score: ' + str(new_score))
@@ -59,6 +64,13 @@ def GetQuestion(mode_controller,label,score):
 		else:
 			label.setText(deletePNG(word))
 
+def ShowAnswer(label,error_window):
+	if label.text() == 'Press To Start Button':
+		error_window.show()
+	else:
+		file_name = label.text() + '.png'
+		os.system('eog words/' + file_name)
+
 """ WINDOW SECTION """
 
 class MachineWindow(QWidget):
@@ -72,6 +84,8 @@ class MachineWindow(QWidget):
 		info_panel = QHBoxLayout()
 		
 		# Items
+		error1_window = Error1()
+		
 		score_label = QLabel('Score: 0')
 		score_label.setFont(QFont('Sans Serif',16))
 		score_label.setStyleSheet('color: white;')
@@ -104,6 +118,7 @@ class MachineWindow(QWidget):
 		# Actions
 		exit_button.clicked.connect(TurnOffMachine)
 		get_button.clicked.connect(lambda: GetQuestion(mode_button,question_label,score_label))
+		show_button.clicked.connect(lambda: ShowAnswer(question_label,error1_window))
 		
 		# Item & SubLayout Management
 		info_panel.addWidget(score_label)
@@ -126,6 +141,13 @@ class MachineWindow(QWidget):
 		self.setWindowTitle('Quiz Machine')
 		self.setWindowIcon(QIcon('resources/icon.png'))
 		self.show()
+
+class Error1(QWidget):
+	def __init__(self):
+		super().__init__()
+		self.Error1GUI()
+	def Error1GUI(self):
+		self.setWindowTitle('Error 1')
 
 def main():
 	app = QApplication(sys.argv)
