@@ -28,7 +28,6 @@ class MachineWindow(QWidget):
 		
 		mode_button = QPushButton(' Mode: Endless')
 		mode_button.setFont(QFont('Courier New',16))
-		mode_button.resize(200,200)
 		
 		# Item & SubLayout Management
 		main_layout.addWidget(question_label)
