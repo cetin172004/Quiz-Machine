@@ -13,7 +13,7 @@ import os
 
 """ VARIABLES """
 
-error1 = "Firstly you must to get a question"
+error1_message = "Firstly you must to get a question"
 
 """ EXTERNAL FUNCTIONS """
 
@@ -147,7 +147,23 @@ class Error1(QWidget):
 		super().__init__()
 		self.Error1GUI()
 	def Error1GUI(self):
+		error1_layout = QHBoxLayout()
+		
+		error_image = QLabel()
+		error_image.setPixmap(QPixmap('resources/error.png'))
+		error_image.setAlignment(Qt.AlignCenter)
+		
+		error_label = QLabel(error1_message,self)
+		error_label.setAlignment(Qt.AlignCenter)
+		error_label.setFont(QFont('Sans Serif',16))
+		error_label.setStyleSheet('color: white;')
+		
+		error1_layout.addWidget(error_image)
+		error1_layout.addWidget(error_label)
+		
+		self.setLayout(error1_layout)
 		self.setWindowTitle('Error 1')
+		self.setStyleSheet('background-color: #373737;')
 
 def main():
 	app = QApplication(sys.argv)
