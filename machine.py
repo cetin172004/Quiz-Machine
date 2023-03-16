@@ -11,20 +11,41 @@ import random
 import sys
 import os
 
+""" EXTERNAL FUNCTIONS """
+
 def deletePNG(text):
 	edited_word = ""
 	counter = 0
-	for character in text:
+	for character in text:	
 		if counter == len(text) - 4:
 			break
 		edited_word += character
 		counter += 1
 	return edited_word
 
+def deleteScoreText(text):
+	edited_score = ""
+	counter = 0
+	for character in text:
+		if counter > 6:
+			edited_score += character
+			counter += 1
+		else:
+			counter += 1
+	
+	return edited_score
+
+""" BUTTON ACTIONS """
+
 def TurnOffMachine():
 	sys.exit()
 
-def GetQuestion(mode_controller,label):
+def GetQuestion(mode_controller,label,score):
+	old_score = deleteScoreText(score.text())
+	new_score = int(old_score) + 1
+	score.setText('Score: ' + str(new_score))
+	
+	# mode check
 	if mode_controller.text() == 'Mode: Endless':
 		words = os.listdir('words')
 		word = random.choice(words)
@@ -38,6 +59,8 @@ def GetQuestion(mode_controller,label):
 		else:
 			label.setText(deletePNG(word))
 
+""" WINDOW SECTION """
+
 class MachineWindow(QWidget):
 	def __init__(self):
 		super().__init__()
@@ -46,8 +69,17 @@ class MachineWindow(QWidget):
 		
 		# Layouts
 		main_layout = QVBoxLayout()
+		info_panel = QHBoxLayout()
 		
 		# Items
+		score_label = QLabel('Score: 0')
+		score_label.setFont(QFont('Sans Serif',16))
+		score_label.setStyleSheet('color: white;')
+		
+		total_label = QLabel('Total: ' + str(len(os.listdir('words'))))
+		total_label.setFont(QFont('Sans Serif',16))
+		total_label.setStyleSheet('color: white;')
+		
 		question_label = QLabel('Press To Start Button')
 		question_label.setAlignment(Qt.AlignCenter)
 		question_label.setFont(QFont('Sans Serif',24))
@@ -71,9 +103,14 @@ class MachineWindow(QWidget):
 		
 		# Actions
 		exit_button.clicked.connect(TurnOffMachine)
-		get_button.clicked.connect(lambda: GetQuestion(mode_button,question_label))
+		get_button.clicked.connect(lambda: GetQuestion(mode_button,question_label,score_label))
 		
 		# Item & SubLayout Management
+		info_panel.addWidget(score_label)
+		info_panel.addWidget(total_label)
+		info_panel.setAlignment(Qt.AlignCenter)
+		
+		main_layout.addLayout(info_panel)
 		main_layout.addStretch()
 		main_layout.addWidget(question_label)
 		main_layout.addStretch()	
@@ -106,5 +143,8 @@ hunter mode = tamam hayir butonu ekler
 			tamam dedikce kelimeler bidaha gelmez
 			en son kelime bitince durur
 endless mode = tamam / hayir butonlari kalkar surekli devam eder
+
+size fix
+mode name and infos should make colorful
 
 """
