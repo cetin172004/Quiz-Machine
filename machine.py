@@ -11,8 +11,32 @@ import random
 import sys
 import os
 
+def deletePNG(text):
+	edited_word = ""
+	counter = 0
+	for character in text:
+		if counter == len(text) - 4:
+			break
+		edited_word += character
+		counter += 1
+	return edited_word
+
 def TurnOffMachine():
 	sys.exit()
+
+def GetQuestion(mode_controller,label):
+	if mode_controller.text() == 'Mode: Endless':
+		words = os.listdir('words')
+		word = random.choice(words)
+		
+		# choose another one if they are same
+		if label.text() == deletePNG(word):
+			words.remove(word)
+			alternative_word = random.choice(words)
+			words.append(word)
+			label.setText(deletePNG(alternative_word))	
+		else:
+			label.setText(deletePNG(word))
 
 class MachineWindow(QWidget):
 	def __init__(self):
@@ -47,6 +71,7 @@ class MachineWindow(QWidget):
 		
 		# Actions
 		exit_button.clicked.connect(TurnOffMachine)
+		get_button.clicked.connect(lambda: GetQuestion(mode_button,question_label))
 		
 		# Item & SubLayout Management
 		main_layout.addStretch()
@@ -56,11 +81,10 @@ class MachineWindow(QWidget):
 		main_layout.addWidget(get_button)
 		main_layout.addWidget(show_button)
 		main_layout.addWidget(exit_button)
-		main_layout.addStretch()
 		
 		# General Properties
 		self.setLayout(main_layout)
-		self.setGeometry(0,0,500,700)
+		self.setGeometry(0,0,400,500)
 		self.setStyleSheet('background-color: #373737;')
 		self.setWindowTitle('Quiz Machine')
 		self.setWindowIcon(QIcon('resources/icon.png'))
@@ -76,6 +100,8 @@ if __name__ == "__main__":
 	
 	
 """
+500 700
+exit_button.setEnabled(False)
 hunter mode = tamam hayir butonu ekler
 			tamam dedikce kelimeler bidaha gelmez
 			en son kelime bitince durur
