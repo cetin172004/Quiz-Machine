@@ -8,6 +8,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 
 from screeninfo import get_monitors
+from PIL import Image
 
 import random
 import sys
@@ -78,12 +79,24 @@ def GetQuestion(mode_controller,label,score):
 		else:
 			label.setText(deletePNG(word))
 
-def ShowAnswer(label,error_window):
+def ShowAnswer(label,error_window,window,empty_label,layout):
 	if label.text() == ' Press To Start Button ':
 		error_window.show()
 	else:
 		file_name = label.text() + '.png'
-		os.system('eog words/' + file_name)
+		
+		empty_label.setPixmap(QPixmap('words/' + file_name))
+		layout.addWidget(empty_label)
+		
+		answer = Image.open('words/' + file_name)
+		answer_width = answer.width
+		answer_height = answer.height
+		
+		window.setFixedSize(answer_width,answer_height)
+		window.setLayout(layout)
+		window.move(700,100)
+		window.show()
+		
 
 def ChangeMode(button,mode1_window,mode2_window):
 	if button.text() == 'Mode: Endless':
@@ -113,6 +126,7 @@ class MachineWindow(QWidget):
 		error1_window = Error1()
 		endless_window = EndlessModeInfo()
 		hunter_window = HunterModeInfo()
+		answer_window = Answer()
 		
 		score_label = QLabel('Score: 0')
 		score_label.setFont(QFont('Sans Serif',16))
@@ -158,7 +172,7 @@ class MachineWindow(QWidget):
 		# Actions
 		exit_button.clicked.connect(TurnOffMachine)
 		get_button.clicked.connect(lambda: GetQuestion(mode_button,question_label,score_label))
-		show_button.clicked.connect(lambda: ShowAnswer(question_label,error1_window))
+		show_button.clicked.connect(lambda: ShowAnswer(question_label,error1_window,answer_window,answer_window.answer_image,answer_window.answer_layout))
 		mode_button.clicked.connect(lambda: ChangeMode(mode_button,endless_window,hunter_window))
 		
 		# Item & SubLayout Management
@@ -317,6 +331,21 @@ class HunterModeInfo(QWidget):
 		self.setFixedSize(390,120)
 		self.move(700,500)
 		self.setWindowTitle('Hunter Mode Info')
+		self.setStyleSheet('background-color: #373737;')
+
+class Answer(QWidget):
+	def __init__(self):
+		super().__init__()
+		self.AnswerGUI()
+	def AnswerGUI(self):
+		self.answer_layout = QHBoxLayout()
+		self.answer_image = QLabel()
+		
+		# give priority
+		self.setWindowFlags(Qt.WindowStaysOnTopHint)
+		self.setWindowModality(Qt.ApplicationModal)
+		
+		self.setWindowTitle('Answer')
 		self.setStyleSheet('background-color: #373737;')
 
 def main():
