@@ -186,7 +186,7 @@ class MachineWindow(QWidget):
 		
 		# General Properties
 		self.setLayout(main_layout)
-		self.setGeometry(0,0,450,550)
+		self.setFixedSize(450,550)
 		Center(self)
 		self.setStyleSheet('background-color: #373737;')
 		self.setWindowTitle('Quiz Machine')
@@ -230,7 +230,8 @@ class Error1(QWidget):
 		
 		self.setWindowIcon(QIcon('resources/icon.png'))
 		self.setLayout(main_layout)
-		self.setGeometry(600,500,200,100)
+		self.setFixedSize(420,120)
+		self.move(700,500)
 		self.setWindowTitle('Error 1')
 		self.setStyleSheet('background-color: #373737;')
 
@@ -271,7 +272,8 @@ class EndlessModeInfo(QWidget):
 		
 		self.setWindowIcon(QIcon('resources/icon.png'))
 		self.setLayout(main_layout)
-		self.setGeometry(600,500,200,100)
+		self.setFixedSize(390,120)
+		self.move(700,500)
 		self.setWindowTitle('Endless Mode Info')
 		self.setStyleSheet('background-color: #373737;')
 
@@ -312,7 +314,8 @@ class HunterModeInfo(QWidget):
 		
 		self.setWindowIcon(QIcon('resources/icon.png'))
 		self.setLayout(main_layout)
-		self.setGeometry(600,500,200,100)
+		self.setFixedSize(390,120)
+		self.move(700,500)
 		self.setWindowTitle('Hunter Mode Info')
 		self.setStyleSheet('background-color: #373737;')
 
