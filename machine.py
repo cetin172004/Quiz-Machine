@@ -196,6 +196,10 @@ class Error1(QWidget):
 		error1_layout.addWidget(error_image)
 		error1_layout.addWidget(error_label)
 		
+		# give priority
+		self.setWindowFlags(Qt.WindowStaysOnTopHint)
+		self.setWindowModality(Qt.ApplicationModal)
+		
 		self.setWindowIcon(QIcon('resources/icon.png'))
 		self.setLayout(error1_layout)
 		self.setWindowTitle('Error 1')
@@ -220,6 +224,8 @@ class EndlessModeInfo(QWidget):
 		endless_layout.addWidget(endless_image)
 		endless_layout.addWidget(endless_label)
 		
+		self.setWindowFlags(Qt.WindowStaysOnTopHint)
+		self.setWindowModality(Qt.ApplicationModal)	
 		self.setWindowIcon(QIcon('resources/icon.png'))
 		self.setLayout(endless_layout)
 		self.setWindowTitle('Endless Mode Info')
@@ -244,6 +250,8 @@ class HunterModeInfo(QWidget):
 		hunter_layout.addWidget(hunter_image)
 		hunter_layout.addWidget(hunter_label)
 		
+		self.setWindowFlags(Qt.WindowStaysOnTopHint)
+		self.setWindowModality(Qt.ApplicationModal)
 		self.setWindowIcon(QIcon('resources/icon.png'))
 		self.setLayout(hunter_layout)
 		self.setWindowTitle('Hunter Mode Info')
