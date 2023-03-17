@@ -91,6 +91,8 @@ class MachineWindow(QWidget):
 		score_label.setFont(QFont('Sans Serif',16))
 		score_label.setStyleSheet('color: white;')
 		
+		info_seperator = QLabel('  ')
+		
 		total_label = QLabel('Total: ' + str(len(os.listdir('words'))))
 		total_label.setFont(QFont('Sans Serif',16))
 		total_label.setStyleSheet('color: white;')
@@ -129,6 +131,7 @@ class MachineWindow(QWidget):
 		
 		# Item & SubLayout Management
 		info_panel.addWidget(score_label)
+		info_panel.addWidget(info_seperator)
 		info_panel.addWidget(total_label)
 		info_panel.setAlignment(Qt.AlignCenter)
 		main_layout.addLayout(info_panel)
