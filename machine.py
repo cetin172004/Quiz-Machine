@@ -81,6 +81,9 @@ def ChangeMode(button,mode1_window,mode2_window):
 		button.setText('Mode: Endless')
 		mode1_window.show()
 
+def ClosePopUp(window):
+	window.close()
+
 """ WINDOW SECTION """
 
 class MachineWindow(QWidget):
@@ -199,6 +202,8 @@ class Error1(QWidget):
 		close_button.setFont(QFont('Sans Serif',12))
 		close_button.setStyleSheet('color: white;')
 		
+		close_button.clicked.connect(lambda: ClosePopUp(self))
+		
 		error1_layout.addWidget(error_image)
 		error1_layout.addWidget(error_label)
 		close_layout.addStretch()
@@ -237,6 +242,8 @@ class EndlessModeInfo(QWidget):
 		close_button.setFont(QFont('Sans Serif',12))
 		close_button.setStyleSheet('color: white;')
 		
+		close_button.clicked.connect(lambda: ClosePopUp(self))
+		
 		endless_layout.addWidget(endless_image)
 		endless_layout.addWidget(endless_label)
 		close_layout.addStretch()
@@ -274,6 +281,8 @@ class HunterModeInfo(QWidget):
 		close_button = QPushButton('Close')
 		close_button.setFont(QFont('Sans Serif',12))
 		close_button.setStyleSheet('color: white;')
+		
+		close_button.clicked.connect(lambda: ClosePopUp(self))
 		
 		hunter_layout.addWidget(hunter_image)
 		hunter_layout.addWidget(hunter_label)
