@@ -65,7 +65,7 @@ def GetQuestion(mode_controller,label,score):
 			label.setText(deletePNG(word))
 
 def ShowAnswer(label,error_window):
-	if label.text() == 'Press To Start Button':
+	if label.text() == ' Press To Start Button ':
 		error_window.show()
 	else:
 		file_name = label.text() + '.png'
@@ -82,6 +82,7 @@ class MachineWindow(QWidget):
 		# Layouts
 		main_layout = QVBoxLayout()
 		info_panel = QHBoxLayout()
+		question_box = QHBoxLayout()
 		
 		# Items
 		error1_window = Error1()
@@ -94,10 +95,16 @@ class MachineWindow(QWidget):
 		total_label.setFont(QFont('Sans Serif',16))
 		total_label.setStyleSheet('color: white;')
 		
-		question_label = QLabel('Press To Start Button')
+		question_label = QLabel(' Press To Start Button ')
 		question_label.setAlignment(Qt.AlignCenter)
 		question_label.setFont(QFont('Sans Serif',24))
 		question_label.setStyleSheet('color: white;')
+		
+		right_label = QLabel()
+		right_label.setPixmap(QPixmap('resources/right.png'))
+		
+		left_label = QLabel()
+		left_label.setPixmap(QPixmap('resources/left.png'))
 		
 		mode_button = QPushButton('Mode: Endless')
 		mode_button.setFont(QFont('Sans Serif',16))
@@ -124,11 +131,18 @@ class MachineWindow(QWidget):
 		info_panel.addWidget(score_label)
 		info_panel.addWidget(total_label)
 		info_panel.setAlignment(Qt.AlignCenter)
-		
 		main_layout.addLayout(info_panel)
+		
 		main_layout.addStretch()
-		main_layout.addWidget(question_label)
+		
+		question_box.addWidget(right_label)
+		question_box.addWidget(question_label)
+		question_box.addWidget(left_label)
+		main_layout.addLayout(question_box)
+		question_box.setAlignment(Qt.AlignCenter)
+		
 		main_layout.addStretch()	
+		
 		main_layout.addWidget(mode_button)
 		main_layout.addWidget(get_button)
 		main_layout.addWidget(show_button)
