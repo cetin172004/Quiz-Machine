@@ -7,6 +7,8 @@ from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 
+from screeninfo import get_monitors
+
 import random
 import sys
 import os
@@ -41,6 +43,16 @@ def deleteScoreText(text):
 	
 	return edited_score
 
+def Center(window):
+	for monitor in get_monitors():
+		screen_width = monitor.width
+		screen_height = monitor.height
+
+	window_x = (screen_width - window.width()) / 2
+	window_y = (screen_height - window.height()) / 2
+	
+	window.move(int(window_x),int(window_y))
+	
 """ BUTTON ACTIONS """
 
 def TurnOffMachine():
@@ -174,7 +186,8 @@ class MachineWindow(QWidget):
 		
 		# General Properties
 		self.setLayout(main_layout)
-		self.setGeometry(0,0,400,550)
+		self.setGeometry(0,0,450,550)
+		Center(self)
 		self.setStyleSheet('background-color: #373737;')
 		self.setWindowTitle('Quiz Machine')
 		self.setWindowIcon(QIcon('resources/icon.png'))
@@ -217,6 +230,7 @@ class Error1(QWidget):
 		
 		self.setWindowIcon(QIcon('resources/icon.png'))
 		self.setLayout(main_layout)
+		self.setGeometry(600,500,200,100)
 		self.setWindowTitle('Error 1')
 		self.setStyleSheet('background-color: #373737;')
 
@@ -257,6 +271,7 @@ class EndlessModeInfo(QWidget):
 		
 		self.setWindowIcon(QIcon('resources/icon.png'))
 		self.setLayout(main_layout)
+		self.setGeometry(600,500,200,100)
 		self.setWindowTitle('Endless Mode Info')
 		self.setStyleSheet('background-color: #373737;')
 
@@ -297,6 +312,7 @@ class HunterModeInfo(QWidget):
 		
 		self.setWindowIcon(QIcon('resources/icon.png'))
 		self.setLayout(main_layout)
+		self.setGeometry(600,500,200,100)
 		self.setWindowTitle('Hunter Mode Info')
 		self.setStyleSheet('background-color: #373737;')
 
