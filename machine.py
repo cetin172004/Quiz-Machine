@@ -14,6 +14,8 @@ import os
 """ VARIABLES """
 
 error1_message = "Firstly you must to get a question"
+endless_message = " You are in endless mode \n You can read documentation"
+hunter_message = "You are in hunter mode \n You can read documentation"
 
 """ EXTERNAL FUNCTIONS """
 
@@ -71,6 +73,14 @@ def ShowAnswer(label,error_window):
 		file_name = label.text() + '.png'
 		os.system('eog words/' + file_name)
 
+def ChangeMode(button,mode1_window,mode2_window):
+	if button.text() == 'Mode: Endless':
+		button.setText('Mode: Hunter')
+		mode2_window.show()
+	else:
+		button.setText('Mode: Endless')
+		mode1_window.show()
+
 """ WINDOW SECTION """
 
 class MachineWindow(QWidget):
@@ -86,6 +96,8 @@ class MachineWindow(QWidget):
 		
 		# Items
 		error1_window = Error1()
+		endless_window = EndlessModeInfo()
+		hunter_window = HunterModeInfo()
 		
 		score_label = QLabel('Score: 0')
 		score_label.setFont(QFont('Sans Serif',16))
@@ -120,6 +132,10 @@ class MachineWindow(QWidget):
 		show_button.setFont(QFont('Sans Serif',16))
 		show_button.setStyleSheet('color: white;')
 		
+		documentation_button = QPushButton('Documentation')
+		documentation_button.setFont(QFont('Sans Serif',16))
+		documentation_button.setStyleSheet('color: white;')
+		
 		exit_button = QPushButton('Exit')
 		exit_button.setFont(QFont('Sans Serif',16))
 		exit_button.setStyleSheet('color: white;')
@@ -128,6 +144,7 @@ class MachineWindow(QWidget):
 		exit_button.clicked.connect(TurnOffMachine)
 		get_button.clicked.connect(lambda: GetQuestion(mode_button,question_label,score_label))
 		show_button.clicked.connect(lambda: ShowAnswer(question_label,error1_window))
+		mode_button.clicked.connect(lambda: ChangeMode(mode_button,endless_window,hunter_window))
 		
 		# Item & SubLayout Management
 		info_panel.addWidget(score_label)
@@ -146,6 +163,7 @@ class MachineWindow(QWidget):
 		
 		main_layout.addStretch()	
 		
+		main_layout.addWidget(documentation_button)
 		main_layout.addWidget(mode_button)
 		main_layout.addWidget(get_button)
 		main_layout.addWidget(show_button)
@@ -153,7 +171,7 @@ class MachineWindow(QWidget):
 		
 		# General Properties
 		self.setLayout(main_layout)
-		self.setGeometry(0,0,400,500)
+		self.setGeometry(0,0,400,550)
 		self.setStyleSheet('background-color: #373737;')
 		self.setWindowTitle('Quiz Machine')
 		self.setWindowIcon(QIcon('resources/icon.png'))
@@ -172,14 +190,63 @@ class Error1(QWidget):
 		
 		error_label = QLabel(error1_message,self)
 		error_label.setAlignment(Qt.AlignCenter)
-		error_label.setFont(QFont('Sans Serif',16))
+		error_label.setFont(QFont('Sans Serif',14))
 		error_label.setStyleSheet('color: white;')
 		
 		error1_layout.addWidget(error_image)
 		error1_layout.addWidget(error_label)
 		
+		self.setWindowIcon(QIcon('resources/icon.png'))
 		self.setLayout(error1_layout)
 		self.setWindowTitle('Error 1')
+		self.setStyleSheet('background-color: #373737;')
+
+class EndlessModeInfo(QWidget):
+	def __init__(self):
+		super().__init__()
+		self.EndlessGUI()
+	def EndlessGUI(self):
+		endless_layout = QHBoxLayout()
+		
+		endless_image = QLabel()
+		endless_image.setPixmap(QPixmap('resources/endless.png'))
+		endless_image.setAlignment(Qt.AlignCenter)
+		
+		endless_label = QLabel(endless_message,self)
+		endless_label.setAlignment(Qt.AlignCenter)
+		endless_label.setFont(QFont('Sans Serif',14))
+		endless_label.setStyleSheet('color: white;')
+		
+		endless_layout.addWidget(endless_image)
+		endless_layout.addWidget(endless_label)
+		
+		self.setWindowIcon(QIcon('resources/icon.png'))
+		self.setLayout(endless_layout)
+		self.setWindowTitle('Endless Mode Info')
+		self.setStyleSheet('background-color: #373737;')
+
+class HunterModeInfo(QWidget):
+	def __init__(self):
+		super().__init__()
+		self.HunterGUI()
+	def HunterGUI(self):
+		hunter_layout = QHBoxLayout()
+		
+		hunter_image = QLabel()
+		hunter_image.setPixmap(QPixmap('resources/hunter.png'))
+		hunter_image.setAlignment(Qt.AlignCenter)
+		
+		hunter_label = QLabel(hunter_message,self)
+		hunter_label.setAlignment(Qt.AlignCenter)
+		hunter_label.setFont(QFont('Sans Serif',14))
+		hunter_label.setStyleSheet('color: white;')
+		
+		hunter_layout.addWidget(hunter_image)
+		hunter_layout.addWidget(hunter_label)
+		
+		self.setWindowIcon(QIcon('resources/icon.png'))
+		self.setLayout(hunter_layout)
+		self.setWindowTitle('Hunter Mode Info')
 		self.setStyleSheet('background-color: #373737;')
 
 def main():
@@ -189,17 +256,3 @@ def main():
 	
 if __name__ == "__main__":
 	main()
-	
-	
-"""
-500 700
-exit_button.setEnabled(False)
-hunter mode = tamam hayir butonu ekler
-			tamam dedikce kelimeler bidaha gelmez
-			en son kelime bitince durur
-endless mode = tamam / hayir butonlari kalkar surekli devam eder
-
-size fix
-mode name and infos should make colorful
-
-"""
