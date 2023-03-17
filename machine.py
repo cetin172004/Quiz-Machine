@@ -183,6 +183,8 @@ class Error1(QWidget):
 		self.Error1GUI()
 	def Error1GUI(self):
 		error1_layout = QHBoxLayout()
+		close_layout = QHBoxLayout()
+		main_layout = QVBoxLayout()
 		
 		error_image = QLabel()
 		error_image.setPixmap(QPixmap('resources/error.png'))
@@ -193,15 +195,23 @@ class Error1(QWidget):
 		error_label.setFont(QFont('Sans Serif',14))
 		error_label.setStyleSheet('color: white;')
 		
+		close_button = QPushButton('Close')
+		close_button.setFont(QFont('Sans Serif',12))
+		close_button.setStyleSheet('color: white;')
+		
 		error1_layout.addWidget(error_image)
 		error1_layout.addWidget(error_label)
+		close_layout.addStretch()
+		close_layout.addWidget(close_button)
+		main_layout.addLayout(error1_layout)
+		main_layout.addLayout(close_layout)
 		
 		# give priority
 		self.setWindowFlags(Qt.WindowStaysOnTopHint)
 		self.setWindowModality(Qt.ApplicationModal)
 		
 		self.setWindowIcon(QIcon('resources/icon.png'))
-		self.setLayout(error1_layout)
+		self.setLayout(main_layout)
 		self.setWindowTitle('Error 1')
 		self.setStyleSheet('background-color: #373737;')
 
@@ -211,6 +221,8 @@ class EndlessModeInfo(QWidget):
 		self.EndlessGUI()
 	def EndlessGUI(self):
 		endless_layout = QHBoxLayout()
+		close_layout = QHBoxLayout()
+		main_layout = QVBoxLayout()
 		
 		endless_image = QLabel()
 		endless_image.setPixmap(QPixmap('resources/endless.png'))
@@ -221,13 +233,23 @@ class EndlessModeInfo(QWidget):
 		endless_label.setFont(QFont('Sans Serif',14))
 		endless_label.setStyleSheet('color: white;')
 		
+		close_button = QPushButton('Close')
+		close_button.setFont(QFont('Sans Serif',12))
+		close_button.setStyleSheet('color: white;')
+		
 		endless_layout.addWidget(endless_image)
 		endless_layout.addWidget(endless_label)
+		close_layout.addStretch()
+		close_layout.addWidget(close_button)
+		main_layout.addLayout(endless_layout)
+		main_layout.addLayout(close_layout)
 		
+		# give priority
 		self.setWindowFlags(Qt.WindowStaysOnTopHint)
-		self.setWindowModality(Qt.ApplicationModal)	
+		self.setWindowModality(Qt.ApplicationModal)
+		
 		self.setWindowIcon(QIcon('resources/icon.png'))
-		self.setLayout(endless_layout)
+		self.setLayout(main_layout)
 		self.setWindowTitle('Endless Mode Info')
 		self.setStyleSheet('background-color: #373737;')
 
@@ -237,6 +259,8 @@ class HunterModeInfo(QWidget):
 		self.HunterGUI()
 	def HunterGUI(self):
 		hunter_layout = QHBoxLayout()
+		close_layout = QHBoxLayout()
+		main_layout = QVBoxLayout()
 		
 		hunter_image = QLabel()
 		hunter_image.setPixmap(QPixmap('resources/hunter.png'))
@@ -247,13 +271,23 @@ class HunterModeInfo(QWidget):
 		hunter_label.setFont(QFont('Sans Serif',14))
 		hunter_label.setStyleSheet('color: white;')
 		
+		close_button = QPushButton('Close')
+		close_button.setFont(QFont('Sans Serif',12))
+		close_button.setStyleSheet('color: white;')
+		
 		hunter_layout.addWidget(hunter_image)
 		hunter_layout.addWidget(hunter_label)
+		close_layout.addStretch()
+		close_layout.addWidget(close_button)
+		main_layout.addLayout(hunter_layout)
+		main_layout.addLayout(close_layout)
 		
+		# give priority
 		self.setWindowFlags(Qt.WindowStaysOnTopHint)
 		self.setWindowModality(Qt.ApplicationModal)
+		
 		self.setWindowIcon(QIcon('resources/icon.png'))
-		self.setLayout(hunter_layout)
+		self.setLayout(main_layout)
 		self.setWindowTitle('Hunter Mode Info')
 		self.setStyleSheet('background-color: #373737;')
 
