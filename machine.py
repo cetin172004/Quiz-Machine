@@ -152,23 +152,63 @@ class MachineWindow(QWidget):
 		
 		mode_button = QPushButton('Mode: Endless')
 		mode_button.setFont(QFont('Sans Serif',16))
-		mode_button.setStyleSheet('color: white;')
+		mode_button.setStyleSheet("QPushButton"
+                             "{"
+                             "color : white;"
+                             "}"
+                             "QPushButton::hover"
+                             "{"
+                             "background-color : #796719;"
+                             "}"
+                             )
 		
 		get_button = QPushButton('Get Question')
 		get_button.setFont(QFont('Sans Serif',16))
-		get_button.setStyleSheet('color: white;')
+		get_button.setStyleSheet("QPushButton"
+                             "{"
+                             "color : white;"
+                             "}"
+                             "QPushButton::hover"
+                             "{"
+                             "background-color : #796719;"
+                             "}"
+                             )
 		
 		show_button = QPushButton('Show Answer')
 		show_button.setFont(QFont('Sans Serif',16))
-		show_button.setStyleSheet('color: white;')
+		show_button.setStyleSheet("QPushButton"
+                             "{"
+                             "color : white;"
+                             "}"
+                             "QPushButton::hover"
+                             "{"
+                             "background-color : #796719;"
+                             "}"
+                             )
 		
 		documentation_button = QPushButton('Documentation')
 		documentation_button.setFont(QFont('Sans Serif',16))
-		documentation_button.setStyleSheet('color: white;')
+		documentation_button.setStyleSheet("QPushButton"
+                             "{"
+                             "color : white;"
+                             "}"
+                             "QPushButton::hover"
+                             "{"
+                             "background-color : #796719;"
+                             "}"
+                             )                      
 		
 		exit_button = QPushButton('Exit')
 		exit_button.setFont(QFont('Sans Serif',16))
-		exit_button.setStyleSheet('color: white;')
+		exit_button.setStyleSheet("QPushButton"
+                             "{"
+                             "color : white;"
+                             "}"
+                             "QPushButton::hover"
+                             "{"
+                             "background-color : #796719;"
+                             "}"
+                             )
 		
 		# Actions
 		exit_button.clicked.connect(TurnOffMachine)
@@ -228,7 +268,15 @@ class Error1(QWidget):
 		
 		close_button = QPushButton('Close')
 		close_button.setFont(QFont('Sans Serif',12))
-		close_button.setStyleSheet('color: white;')
+		close_button.setStyleSheet("QPushButton"
+                             "{"
+                             "color : white;"
+                             "}"
+                             "QPushButton::hover"
+                             "{"
+                             "background-color : #796719;"
+                             "}"
+                             )
 		
 		close_button.clicked.connect(lambda: ClosePopUp(self))
 		
@@ -270,7 +318,15 @@ class EndlessModeInfo(QWidget):
 		
 		close_button = QPushButton('Close')
 		close_button.setFont(QFont('Sans Serif',12))
-		close_button.setStyleSheet('color: white;')
+		close_button.setStyleSheet("QPushButton"
+                             "{"
+                             "color : white;"
+                             "}"
+                             "QPushButton::hover"
+                             "{"
+                             "background-color : #796719;"
+                             "}"
+                             )
 		
 		close_button.clicked.connect(lambda: ClosePopUp(self))
 		
@@ -312,7 +368,15 @@ class HunterModeInfo(QWidget):
 		
 		close_button = QPushButton('Close')
 		close_button.setFont(QFont('Sans Serif',12))
-		close_button.setStyleSheet('color: white;')
+		close_button.setStyleSheet("QPushButton"
+                             "{"
+                             "color : white;"
+                             "}"
+                             "QPushButton::hover"
+                             "{"
+                             "background-color : #796719;"
+                             "}"
+                             )
 		
 		close_button.clicked.connect(lambda: ClosePopUp(self))
 		
