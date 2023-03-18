@@ -92,6 +92,7 @@ def ShowAnswer(label,error_window,window,empty_label,layout):
 		answer_width = answer.width
 		answer_height = answer.height
 		
+		window.setWindowTitle('Answer of ' + deletePNG(file_name))
 		window.setFixedSize(answer_width,answer_height)
 		window.setLayout(layout)
 		window.move(700,100)
@@ -344,8 +345,7 @@ class Answer(QWidget):
 		# give priority
 		self.setWindowFlags(Qt.WindowStaysOnTopHint)
 		self.setWindowModality(Qt.ApplicationModal)
-		
-		self.setWindowTitle('Answer')
+
 		self.setStyleSheet('background-color: #373737;')
 
 def main():
