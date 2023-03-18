@@ -36,7 +36,7 @@ def deleteScoreText(text):
 	edited_score = ""
 	counter = 0
 	for character in text:
-		if counter > 6:
+		if counter > 28 and counter < len(text) - 7:
 			edited_score += character
 			counter += 1
 		else:
@@ -63,7 +63,7 @@ def GetQuestion(mode_controller,label,score):
 	# refresh score
 	old_score = deleteScoreText(score.text())
 	new_score = int(old_score) + 1
-	score.setText('Score: ' + str(new_score))
+	score.setText('Score:<font color="#ffd84d"> ' + str(new_score) + '</font>')
 	
 	# mode check
 	if mode_controller.text() == 'Mode: Endless':
@@ -128,13 +128,13 @@ class MachineWindow(QWidget):
 		hunter_window = HunterModeInfo()
 		answer_window = Answer()
 		
-		score_label = QLabel('Score: 0')
+		score_label = QLabel('Score:<font color="#ffd84d"> 0</font>')
 		score_label.setFont(QFont('Sans Serif',16))
 		score_label.setStyleSheet('color: white;')
 		
 		info_seperator = QLabel('  ')
 		
-		total_label = QLabel('Total: ' + str(len(os.listdir('words'))))
+		total_label = QLabel('Total: <font color="#ffd84d">' + str(len(os.listdir('words'))) + '</font>')
 		total_label.setFont(QFont('Sans Serif',16))
 		total_label.setStyleSheet('color: white;')
 		
