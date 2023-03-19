@@ -56,8 +56,11 @@ def Center(window):
 	
 """ BUTTON ACTIONS """
 
-def TurnOffMachine():
-	sys.exit()
+def TurnOff(window):
+	if window.windowTitle() == 'Quiz Machine':
+		sys.exit()
+	else:
+		window.close()
 
 def GetQuestion(mode_controller,label,score):
 	# refresh score
@@ -211,7 +214,7 @@ class MachineWindow(QWidget):
                              )
 		
 		# Actions
-		exit_button.clicked.connect(TurnOffMachine)
+		exit_button.clicked.connect(lambda: TurnOff(self))
 		get_button.clicked.connect(lambda: GetQuestion(mode_button,question_label,score_label))
 		show_button.clicked.connect(lambda: ShowAnswer(question_label,error1_window,answer_window,answer_window.answer_image,answer_window.answer_layout))
 		mode_button.clicked.connect(lambda: ChangeMode(mode_button,endless_window,hunter_window))
@@ -221,7 +224,7 @@ class MachineWindow(QWidget):
 		change_mod_sc.activated.connect(lambda: ChangeMode(mode_button,endless_window,hunter_window))
 		
 		turn_off = QShortcut(QKeySequence('Ctrl+q'),self)
-		turn_off.activated.connect(TurnOffMachine)
+		turn_off.activated.connect(lambda: TurnOff(self))
 
 		# Item & SubLayout Management
 		info_panel.addWidget(score_label)
@@ -425,6 +428,9 @@ class Answer(QWidget):
 		self.answer_layout = QHBoxLayout()
 		self.answer_image = QLabel()
 		
+		turn_off_answer = QShortcut(QKeySequence('Ctrl+q'),self)
+		turn_off_answer.activated.connect(lambda: TurnOff(self))
+
 		# give priority
 		self.setWindowFlags(Qt.WindowStaysOnTopHint)
 		self.setWindowModality(Qt.ApplicationModal)
