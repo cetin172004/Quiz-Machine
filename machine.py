@@ -216,6 +216,10 @@ class MachineWindow(QWidget):
 		show_button.clicked.connect(lambda: ShowAnswer(question_label,error1_window,answer_window,answer_window.answer_image,answer_window.answer_layout))
 		mode_button.clicked.connect(lambda: ChangeMode(mode_button,endless_window,hunter_window))
 		
+		# Shortcuts
+		change_mod_sc = QShortcut(QKeySequence('Ctrl+m'),self)
+		change_mod_sc.activated.connect(lambda: ChangeMode(mode_button,endless_window,hunter_window))
+
 		# Item & SubLayout Management
 		info_panel.addWidget(score_label)
 		info_panel.addWidget(info_seperator)
@@ -280,6 +284,10 @@ class Error1(QWidget):
 		
 		close_button.clicked.connect(lambda: ClosePopUp(self))
 		
+		# shortcut
+		close_popup_sc = QShortcut(QKeySequence('Ctrl+w'),self)
+		close_popup_sc.activated.connect(lambda: ClosePopUp(self))		
+
 		error1_layout.addWidget(error_image)
 		error1_layout.addWidget(error_label)
 		close_layout.addStretch()
@@ -330,6 +338,10 @@ class EndlessModeInfo(QWidget):
 		
 		close_button.clicked.connect(lambda: ClosePopUp(self))
 		
+		# shortcut
+		close_popup_sc = QShortcut(QKeySequence('Ctrl+w'),self)
+		close_popup_sc.activated.connect(lambda: ClosePopUp(self))
+
 		endless_layout.addWidget(endless_image)
 		endless_layout.addWidget(endless_label)
 		close_layout.addStretch()
@@ -379,6 +391,10 @@ class HunterModeInfo(QWidget):
                              )
 		
 		close_button.clicked.connect(lambda: ClosePopUp(self))
+		
+		# shortcut
+		close_popup_sc = QShortcut(QKeySequence('Ctrl+w'),self)
+		close_popup_sc.activated.connect(lambda: ClosePopUp(self))
 		
 		hunter_layout.addWidget(hunter_image)
 		hunter_layout.addWidget(hunter_label)
