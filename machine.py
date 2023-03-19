@@ -131,6 +131,7 @@ class MachineWindow(QWidget):
 		endless_window = EndlessModeInfo()
 		hunter_window = HunterModeInfo()
 		answer_window = Answer()
+		doc_window = Documentation()
 		
 		score_label = QLabel('Score:<font color="#ffd84d"> 0</font>')
 		score_label.setFont(QFont('Sans Serif',16))
@@ -218,13 +219,23 @@ class MachineWindow(QWidget):
 		get_button.clicked.connect(lambda: GetQuestion(mode_button,question_label,score_label))
 		show_button.clicked.connect(lambda: ShowAnswer(question_label,error1_window,answer_window,answer_window.answer_image,answer_window.answer_layout))
 		mode_button.clicked.connect(lambda: ChangeMode(mode_button,endless_window,hunter_window))
-		
+		documentation_button.clicked.connect(doc_window.show)
+
 		# Shortcuts
 		change_mod_sc = QShortcut(QKeySequence('Ctrl+m'),self)
 		change_mod_sc.activated.connect(lambda: ChangeMode(mode_button,endless_window,hunter_window))
 		
-		turn_off = QShortcut(QKeySequence('Ctrl+q'),self)
-		turn_off.activated.connect(lambda: TurnOff(self))
+		turn_off_sc = QShortcut(QKeySequence('Ctrl+q'),self)
+		turn_off_sc.activated.connect(lambda: TurnOff(self))
+
+		get_question_sc = QShortcut(QKeySequence('Ctrl+g'),self)
+		get_question_sc.activated.connect(lambda: GetQuestion(mode_button,question_label,score_label))
+
+		show_answer_sc = QShortcut(QKeySequence('Ctrl+s'),self)
+		show_answer_sc.activated.connect(lambda: ShowAnswer(question_label,error1_window,answer_window,answer_window.answer_image,answer_window.answer_layout))
+
+		doc_sc = QShortcut(QKeySequence('Ctrl+d'),self)
+		doc_sc.activated.connect(doc_window.show)		
 
 		# Item & SubLayout Management
 		info_panel.addWidget(score_label)
@@ -428,13 +439,29 @@ class Answer(QWidget):
 		self.answer_layout = QHBoxLayout()
 		self.answer_image = QLabel()
 		
-		turn_off_answer = QShortcut(QKeySequence('Ctrl+q'),self)
-		turn_off_answer.activated.connect(lambda: TurnOff(self))
+		turn_off_answer_sc = QShortcut(QKeySequence('Ctrl+q'),self)
+		turn_off_answer_sc.activated.connect(lambda: TurnOff(self))
 
 		# give priority
 		self.setWindowFlags(Qt.WindowStaysOnTopHint)
 		self.setWindowModality(Qt.ApplicationModal)
 
+		self.setStyleSheet('background-color: #373737;')
+
+class Documentation(QWidget):
+	def __init__(self):
+		super().__init__()
+		self.DocumentationGUI()
+	def DocumentationGUI(self):
+
+		turn_off_doc_sc = QShortcut(QKeySequence('Ctrl+q'),self)
+		turn_off_doc_sc.activated.connect(lambda: TurnOff(self))
+
+		# give priority
+		self.setWindowFlags(Qt.WindowStaysOnTopHint)
+		self.setWindowModality(Qt.ApplicationModal)
+		
+		self.setWindowTitle('Quiz Machine Documentation')
 		self.setStyleSheet('background-color: #373737;')
 
 def main():
