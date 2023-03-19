@@ -219,6 +219,9 @@ class MachineWindow(QWidget):
 		# Shortcuts
 		change_mod_sc = QShortcut(QKeySequence('Ctrl+m'),self)
 		change_mod_sc.activated.connect(lambda: ChangeMode(mode_button,endless_window,hunter_window))
+		
+		turn_off = QShortcut(QKeySequence('Ctrl+q'),self)
+		turn_off.activated.connect(TurnOffMachine)
 
 		# Item & SubLayout Management
 		info_panel.addWidget(score_label)
@@ -285,7 +288,7 @@ class Error1(QWidget):
 		close_button.clicked.connect(lambda: ClosePopUp(self))
 		
 		# shortcut
-		close_popup_sc = QShortcut(QKeySequence('Ctrl+w'),self)
+		close_popup_sc = QShortcut(QKeySequence('Ctrl+c'),self)
 		close_popup_sc.activated.connect(lambda: ClosePopUp(self))		
 
 		error1_layout.addWidget(error_image)
@@ -339,7 +342,7 @@ class EndlessModeInfo(QWidget):
 		close_button.clicked.connect(lambda: ClosePopUp(self))
 		
 		# shortcut
-		close_popup_sc = QShortcut(QKeySequence('Ctrl+w'),self)
+		close_popup_sc = QShortcut(QKeySequence('Ctrl+c'),self)
 		close_popup_sc.activated.connect(lambda: ClosePopUp(self))
 
 		endless_layout.addWidget(endless_image)
@@ -393,9 +396,9 @@ class HunterModeInfo(QWidget):
 		close_button.clicked.connect(lambda: ClosePopUp(self))
 		
 		# shortcut
-		close_popup_sc = QShortcut(QKeySequence('Ctrl+w'),self)
+		close_popup_sc = QShortcut(QKeySequence('Ctrl+c'),self)
 		close_popup_sc.activated.connect(lambda: ClosePopUp(self))
-		
+
 		hunter_layout.addWidget(hunter_image)
 		hunter_layout.addWidget(hunter_label)
 		close_layout.addStretch()
