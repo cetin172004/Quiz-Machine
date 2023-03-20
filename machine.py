@@ -183,20 +183,7 @@ def ChangeMode(button,mode1_window,mode2_window,score,label):
 		button.setText('Mode: Hunter')
 		score.setText('Hunted:<font color="#ffd84d"> ' + str(len(os.listdir('words/hunted'))) + '</font>')
 
-		# new question		
-		words = os.listdir('words')
-		words.remove('hunted')
-		word = random.choice(words)			
-
-		# choose another one if they are same
-		if label.text() == deletePNG(word):
-			words.remove(word)
-			alternative_word = random.choice(words)
-			words.append(word)
-			label.setText(deletePNG(alternative_word))
-			label.setText(deletePNG(alternative_word))
-		else:
-			label.setText(deletePNG(word))
+		label.setText(' Press To Start Button ')
 
 		mode2_window.show()
 	
@@ -210,20 +197,7 @@ def ChangeMode(button,mode1_window,mode2_window,score,label):
 		for hunted_word in hunted_words:
 			os.system('mv words/hunted/' + hunted_word + ' words/' + hunted_word)		
 
-		# new question		
-		words = os.listdir('words')
-		words.remove('hunted')
-		word = random.choice(words)			
-
-		# choose another one if they are same
-		if label.text() == deletePNG(word):
-			words.remove(word)
-			alternative_word = random.choice(words)
-			words.append(word)
-			label.setText(deletePNG(alternative_word))
-			label.setText(deletePNG(alternative_word))
-		else:
-			label.setText(deletePNG(word))
+		label.setText(' Press To Start Button ')
 
 		mode1_window.show()
 
@@ -335,7 +309,7 @@ class MachineWindow(QWidget):
 		exit_button.clicked.connect(lambda: TurnOff(self))
 		get_button.clicked.connect(lambda: GetQuestion(mode_button,question_label,score_label))
 		show_button.clicked.connect(lambda: ShowAnswer(question_label,error1_window,answer_window,answer_window.answer_image,answer_window.answer_layout))
-		mode_button.clicked.connect(lambda: ChangeMode(mode_button,endless_window,hunter_window))
+		mode_button.clicked.connect(lambda: ChangeMode(mode_button,endless_window,hunter_window,score_label,question_label))
 		documentation_button.clicked.connect(doc_window.show)
 
 		# Shortcuts
