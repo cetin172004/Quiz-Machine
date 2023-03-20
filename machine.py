@@ -53,11 +53,33 @@ def Center(window):
 	window_y = (screen_height - window.height()) / 2
 	
 	window.move(int(window_x),int(window_y))
-	
+
+def HideWord(mode_controller,label):
+	if mode_controller.text() == 'Mode: Hunter':
+		words = os.listdir('words')
+		words.remove('hunted')		
+		word = random.choice(words)
+
+		# if it's same with current word
+		if deletePNG(word) == label.text():
+			words.remove(word)
+			word_alternative = random.choice(words)
+			words.append(word)
+			label.setText(deletePNG(word_alternative))
+		
+		# if it's not same with current word
+		else:			
+			label.setText(deletePNG(word))
+
 """ BUTTON ACTIONS """
 
 def TurnOff(window):
 	if window.windowTitle() == 'Quiz Machine':
+		
+		hunted_words = os.listdir('words/hunted')
+		for hunted_word in hunted_words:
+			os.system('mv words/hunted/' + hunted_word + ' words/' + hunted_word)
+
 		sys.exit()
 	else:
 		window.close()
@@ -68,9 +90,10 @@ def GetQuestion(mode_controller,label,score):
 	new_score = int(old_score) + 1
 	score.setText('Score:<font color="#ffd84d"> ' + str(new_score) + '</font>')
 	
-	# mode check
+	# mode is endless
 	if mode_controller.text() == 'Mode: Endless':
 		words = os.listdir('words')
+		words.remove('hunted')
 		word = random.choice(words)
 		
 		# choose another one if they are same
@@ -81,6 +104,33 @@ def GetQuestion(mode_controller,label,score):
 			label.setText(deletePNG(alternative_word))	
 		else:
 			label.setText(deletePNG(word))
+	# mode is endless
+	else:
+		if label.text() == ' Press To Start Button ':
+			words = os.listdir('words')
+			words.remove('hunted')
+			word = random.choice(words)			
+		
+			label.setText(deletePNG(word))
+
+		else:
+			file_name = label.text() + '.png'
+			os.system('mv words/' + file_name + ' words/hunted/' + file_name)
+
+			if len(os.listdir('words/')) == 1:
+				print('tebrikler')
+				
+				hunted_words = os.listdir('words/hunted')
+				for hunted_word in hunted_words:
+					os.system('mv words/hunted/' + hunted_word + ' words/' + hunted_word)
+				sys.exit()
+
+			else:
+				words = os.listdir('words')
+				words.remove('hunted')
+				word = random.choice(words)			
+		
+				label.setText(deletePNG(word))
 
 def ShowAnswer(label,error_window,window,empty_label,layout):
 	if label.text() == ' Press To Start Button ':
@@ -139,7 +189,7 @@ class MachineWindow(QWidget):
 		
 		info_seperator = QLabel('  ')
 		
-		total_label = QLabel('Total: <font color="#ffd84d">' + str(len(os.listdir('words'))) + '</font>')
+		total_label = QLabel('Total: <font color="#ffd84d">' + str(len(os.listdir('words')) - 1) + '</font>')
 		total_label.setFont(QFont('Sans Serif',16))
 		total_label.setStyleSheet('color: white;')
 		
@@ -236,6 +286,9 @@ class MachineWindow(QWidget):
 
 		doc_sc = QShortcut(QKeySequence('Ctrl+d'),self)
 		doc_sc.activated.connect(doc_window.show)		
+
+		hide_sc = QShortcut(QKeySequence('Ctrl+h'),self)
+		hide_sc.activated.connect(lambda: HideWord(mode_button,question_label))
 
 		# Item & SubLayout Management
 		info_panel.addWidget(score_label)
