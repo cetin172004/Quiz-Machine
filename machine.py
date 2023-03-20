@@ -127,7 +127,7 @@ def GetQuestion(mode_controller,label,score,congratulations_window):
 
 	# mode is hunter
 	else:
-		if label.text() == ' Press To Start Button ':
+		if label.text() == ' Press To Get Button ':
 			words = os.listdir('words')
 			words.remove('hunted')
 			word = random.choice(words)			
@@ -149,7 +149,7 @@ def GetQuestion(mode_controller,label,score,congratulations_window):
 				mode_controller.setText('Mode: Hunter')
 				score.setText('Hunted:<font color="#ffd84d"> ' + str(len(os.listdir('words/hunted'))) + '</font>')
 
-				label.setText(' Press To Start Button ')
+				label.setText(' Press To Get Button ')
 
 			else:
 				words = os.listdir('words')
@@ -164,7 +164,7 @@ def GetQuestion(mode_controller,label,score,congratulations_window):
 				label.setText(deletePNG(word))
 
 def ShowAnswer(label,error_window,window,empty_label,layout):
-	if label.text() == ' Press To Start Button ':
+	if label.text() == ' Press To Get Button ':
 		error_window.show()
 	else:
 		file_name = label.text() + '.png'
@@ -189,7 +189,7 @@ def ChangeMode(button,mode1_window,mode2_window,score,label):
 		button.setText('Mode: Hunter')
 		score.setText('Hunted:<font color="#ffd84d"> ' + str(len(os.listdir('words/hunted'))) + '</font>')
 
-		label.setText(' Press To Start Button ')
+		label.setText(' Press To Get Button ')
 
 		mode2_window.show()
 	
@@ -203,7 +203,7 @@ def ChangeMode(button,mode1_window,mode2_window,score,label):
 		for hunted_word in hunted_words:
 			os.system('mv words/hunted/' + hunted_word + ' words/' + hunted_word)		
 
-		label.setText(' Press To Start Button ')
+		label.setText(' Press To Get Button ')
 
 		mode1_window.show()
 
@@ -241,7 +241,7 @@ class MachineWindow(QWidget):
 		total_label.setFont(QFont('Sans Serif',16))
 		total_label.setStyleSheet('color: white;')
 		
-		question_label = QLabel(' Press To Start Button ')
+		question_label = QLabel(' Press To Get Button ')
 		question_label.setAlignment(Qt.AlignCenter)
 		question_label.setFont(QFont('Sans Serif',24))
 		question_label.setStyleSheet('color: white;')
