@@ -44,6 +44,18 @@ def deleteScoreText(text):
 	
 	return edited_score
 
+def deleteHuntedText(text):
+	edited_hunted = ""
+	counter = 0
+	for character in text:
+		if counter > 29 and counter < len(text) - 7:
+			edited_hunted += character
+			counter += 1
+		else:
+			counter += 1
+	
+	return edited_hunted
+
 def Center(window):
 	for monitor in get_monitors():
 		screen_width = monitor.width
@@ -138,6 +150,11 @@ def GetQuestion(mode_controller,label,score):
 				words.remove('hunted')
 				word = random.choice(words)			
 		
+				# refresh hunted
+				old_hunted = deleteHuntedText(score.text())
+				new_hunted = int(old_hunted) + 1
+				score.setText('Hunted:<font color="#ffd84d"> ' + str(new_hunted) + '</font>')
+				
 				label.setText(deletePNG(word))
 
 def ShowAnswer(label,error_window,window,empty_label,layout):
