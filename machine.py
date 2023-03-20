@@ -177,15 +177,54 @@ def ShowAnswer(label,error_window,window,empty_label,layout):
 		window.show()
 		
 
-def ChangeMode(button,mode1_window,mode2_window,score):
+def ChangeMode(button,mode1_window,mode2_window,score,label):
+	# endless --> hunter
 	if button.text() == 'Mode: Endless':
 		button.setText('Mode: Hunter')
 		score.setText('Hunted:<font color="#ffd84d"> ' + str(len(os.listdir('words/hunted'))) + '</font>')
+
+		# new question		
+		words = os.listdir('words')
+		words.remove('hunted')
+		word = random.choice(words)			
+
+		# choose another one if they are same
+		if label.text() == deletePNG(word):
+			words.remove(word)
+			alternative_word = random.choice(words)
+			words.append(word)
+			label.setText(deletePNG(alternative_word))
+			label.setText(deletePNG(alternative_word))
+		else:
+			label.setText(deletePNG(word))
+
 		mode2_window.show()
 	
+	# hunted --> endless
 	else:
 		button.setText('Mode: Endless')
 		score.setText('Score:<font color="#ffd84d"> 0</font>')
+		
+		# replace hunted content
+		hunted_words = os.listdir('words/hunted')
+		for hunted_word in hunted_words:
+			os.system('mv words/hunted/' + hunted_word + ' words/' + hunted_word)		
+
+		# new question		
+		words = os.listdir('words')
+		words.remove('hunted')
+		word = random.choice(words)			
+
+		# choose another one if they are same
+		if label.text() == deletePNG(word):
+			words.remove(word)
+			alternative_word = random.choice(words)
+			words.append(word)
+			label.setText(deletePNG(alternative_word))
+			label.setText(deletePNG(alternative_word))
+		else:
+			label.setText(deletePNG(word))
+
 		mode1_window.show()
 
 def ClosePopUp(window):
@@ -301,7 +340,7 @@ class MachineWindow(QWidget):
 
 		# Shortcuts
 		change_mod_sc = QShortcut(QKeySequence('Ctrl+m'),self)
-		change_mod_sc.activated.connect(lambda: ChangeMode(mode_button,endless_window,hunter_window,score_label))
+		change_mod_sc.activated.connect(lambda: ChangeMode(mode_button,endless_window,hunter_window,score_label,question_label))
 		
 		turn_off_sc = QShortcut(QKeySequence('Ctrl+q'),self)
 		turn_off_sc.activated.connect(lambda: TurnOff(self))
