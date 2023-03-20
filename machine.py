@@ -1,7 +1,7 @@
 """ QUIZ MACHINE """
 
 # created by cetin172004
-# memorize foreign words easily
+# memorize notes and and foreign words easily
 
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
@@ -14,11 +14,12 @@ import random
 import sys
 import os
 
-""" VARIABLES """
+""" SYSTEM MESSAGES """
 
 error1_message = "Firstly you must to get a question"
 endless_message = " You are in endless mode \n You can read documentation"
 hunter_message = "You are in hunter mode \n You can read documentation"
+congratulations_message = "Congratulations !\n You have finished the quiz"
 
 """ EXTERNAL FUNCTIONS """
 
@@ -96,7 +97,7 @@ def TurnOff(window):
 	else:
 		window.close()
 
-def GetQuestion(mode_controller,label,score):
+def GetQuestion(mode_controller,label,score,congratulations_window):
 	# mode is endless
 	if mode_controller.text() == 'Mode: Endless':
 		words = os.listdir('words')
@@ -137,13 +138,18 @@ def GetQuestion(mode_controller,label,score):
 			file_name = label.text() + '.png'
 			os.system('mv words/' + file_name + ' words/hunted/' + file_name)
 
+			# finish the set
 			if len(os.listdir('words/')) == 1:
-				print('tebrikler')
+				congratulations_window.show()
 				
 				hunted_words = os.listdir('words/hunted')
 				for hunted_word in hunted_words:
 					os.system('mv words/hunted/' + hunted_word + ' words/' + hunted_word)
-				sys.exit()
+
+				mode_controller.setText('Mode: Hunter')
+				score.setText('Hunted:<font color="#ffd84d"> ' + str(len(os.listdir('words/hunted'))) + '</font>')
+
+				label.setText(' Press To Start Button ')
 
 			else:
 				words = os.listdir('words')
@@ -223,7 +229,8 @@ class MachineWindow(QWidget):
 		hunter_window = HunterModeInfo()
 		answer_window = Answer()
 		doc_window = Documentation()
-		
+		congratulations_window = Congratulations()
+
 		score_label = QLabel('Score:<font color="#ffd84d"> 0</font>')
 		score_label.setFont(QFont('Sans Serif',16))
 		score_label.setStyleSheet('color: white;')
@@ -307,7 +314,7 @@ class MachineWindow(QWidget):
 		
 		# Actions
 		exit_button.clicked.connect(lambda: TurnOff(self))
-		get_button.clicked.connect(lambda: GetQuestion(mode_button,question_label,score_label))
+		get_button.clicked.connect(lambda: GetQuestion(mode_button,question_label,score_label,congratulations_window))
 		show_button.clicked.connect(lambda: ShowAnswer(question_label,error1_window,answer_window,answer_window.answer_image,answer_window.answer_layout))
 		mode_button.clicked.connect(lambda: ChangeMode(mode_button,endless_window,hunter_window,score_label,question_label))
 		documentation_button.clicked.connect(doc_window.show)
@@ -320,7 +327,7 @@ class MachineWindow(QWidget):
 		turn_off_sc.activated.connect(lambda: TurnOff(self))
 
 		get_question_sc = QShortcut(QKeySequence('Ctrl+g'),self)
-		get_question_sc.activated.connect(lambda: GetQuestion(mode_button,question_label,score_label))
+		get_question_sc.activated.connect(lambda: GetQuestion(mode_button,question_label,score_label,congratulations_window))
 
 		show_answer_sc = QShortcut(QKeySequence('Ctrl+s'),self)
 		show_answer_sc.activated.connect(lambda: ShowAnswer(question_label,error1_window,answer_window,answer_window.answer_image,answer_window.answer_layout))
@@ -523,6 +530,60 @@ class HunterModeInfo(QWidget):
 		self.setFixedSize(390,120)
 		self.move(700,500)
 		self.setWindowTitle('Hunter Mode Info')
+		self.setStyleSheet('background-color: #373737;')
+
+class Congratulations(QWidget):
+	def __init__(self):
+		super().__init__()
+		self.CongratulationsGUI()
+	def CongratulationsGUI(self):
+		congratulations_layout = QHBoxLayout()
+		close_layout = QHBoxLayout()
+		main_layout = QVBoxLayout()
+		
+		congratulations_image = QLabel()
+		congratulations_image.setPixmap(QPixmap('resources/trophy.png'))
+		congratulations_image.setAlignment(Qt.AlignCenter)
+		
+		congratulations_label = QLabel(congratulations_message,self)
+		congratulations_label.setAlignment(Qt.AlignCenter)
+		congratulations_label.setFont(QFont('Sans Serif',14))
+		congratulations_label.setStyleSheet('color: white;')
+		
+		close_button = QPushButton('Close')
+		close_button.setFont(QFont('Sans Serif',12))
+		close_button.setStyleSheet("QPushButton"
+                             "{"
+                             "color : white;"
+                             "}"
+                             "QPushButton::hover"
+                             "{"
+                             "background-color : #796719;"
+                             "}"
+                             )
+		
+		close_button.clicked.connect(lambda: ClosePopUp(self))
+		
+		# shortcut
+		close_popup_sc = QShortcut(QKeySequence('Ctrl+c'),self)
+		close_popup_sc.activated.connect(lambda: ClosePopUp(self))
+
+		congratulations_layout.addWidget(congratulations_image)
+		congratulations_layout.addWidget(congratulations_label)
+		close_layout.addStretch()
+		close_layout.addWidget(close_button)
+		main_layout.addLayout(congratulations_layout)
+		main_layout.addLayout(close_layout)
+		
+		# give priority
+		self.setWindowFlags(Qt.WindowStaysOnTopHint)
+		self.setWindowModality(Qt.ApplicationModal)
+		
+		self.setWindowIcon(QIcon('resources/icon.png'))
+		self.setLayout(main_layout)
+		self.setFixedSize(350,120)
+		self.move(700,500)
+		self.setWindowTitle('Congratulations')
 		self.setStyleSheet('background-color: #373737;')
 
 class Answer(QWidget):
